@@ -1,5 +1,14 @@
 const createError = require('http-errors');
 const express = require('express');
+
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+const mongoDB = "mongodb+srv://Cluster0:xUnpVwmxQUPvypSE@cluster0.pxl60.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+main().catch((err) => console.log(err));
+async function main(){
+  await mongoose.connect(mongoDB);
+}
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
