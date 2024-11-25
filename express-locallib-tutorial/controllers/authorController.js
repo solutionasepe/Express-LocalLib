@@ -2,7 +2,7 @@ const Author = require("../models/author");
 
 const asyncHandler = require("express-async-handler");
 
-exports.author_list = asyncHandler(async, function(req, res, next){
+exports.author_list = asyncHandler(async function(req, res, next){
     res.send("NOT IMPLEMENTED: Author List");
 });
 
