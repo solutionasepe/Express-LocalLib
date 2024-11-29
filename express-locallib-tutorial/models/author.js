@@ -6,7 +6,7 @@ const AuthorSchema = new Schema({
     firstName : {type: String, required: true, maxlenght: 100},
     familyName : {type:String, required: true, maxlenght: 100},
     date_of_birth: {type: Date},
-    date_of_birth: {type: Date}
+    date_of_death: {type: Date}
 });
 
 //virtual for authors full name

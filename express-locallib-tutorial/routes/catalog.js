@@ -26,7 +26,7 @@ router.get('/book/:id/update', book_controller.book_update_get);
 
 router.post('/book/:id/update', book_controller.book_update_post);
 
-router.get('/books', book_controller.book_details);
+router.get('/books/:id', book_controller.book_details);
 
 //author routers
 
@@ -42,7 +42,9 @@ router.get('/author/:id/update', author_controller.author_update_get);
 
 router.post('/author/:id/update', author_controller.author_update_post);
 
-router.get('/authors', author_controller.author_detail);
+router.get('/authors/:id', author_controller.author_detail);
+
+router.get("/authors", author_controller.author_list);
 
 //bookInstance routers
 
@@ -58,7 +60,7 @@ router.get('/bookInstance/:id/update', bookInstance_controller.bookinstance_upda
 
 router.post('/bookInstance/:id/update', bookInstance_controller.bookinstance_update_post);
 
-router.get('/bookinstances', bookInstance_controller.bookinstance_detail);
+router.get('/bookinstances/:id', bookInstance_controller.bookinstance_detail);
 
 //genre routers
 
@@ -74,6 +76,6 @@ router.get('/genre/:id/update', genre_controller.genre_update_get);
 
 router.post('/genre/:id/update', genre_controller.genre_update_post);
 
-router.get('/genres', genre_controller.genre_details);
+router.get('/genres/:id', genre_controller.genre_details);
 
 module.exports = router;
