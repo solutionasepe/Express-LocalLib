@@ -1,4 +1,5 @@
 const Author = require("../models/author");
+const Book = require("../models/book")
 
 const asyncHandler = require("express-async-handler");
 const { find } = require("../models/book");
@@ -11,7 +12,18 @@ exports.author_list = asyncHandler(async function(req, res, next){
 });
 
 exports.author_detail = asyncHandler(async (req, res, next) =>{
-    res.send(`NOT IMPLEMENTED: Author details: ${res.params.id}`);
+    // res.send(`NOT IMPLEMENTED: Author details: ${res.params.id}`);
+    const [author, allbooksbyauthor] = await Promise.all([
+        Author.findById(req.params.id).exec(),
+        Book.find({author: req.params.id}, "title summary").exec(),
+    ]);
+//     res.status(200).json({author:{
+//         firstName: author.firstName,
+//         familyName: author.familyName
+//     },
+//      allbooksbyauthor,
+// });
+        res.status(200).json([author.firstName, author.familyName, allbooksbyauthor]);
 });
 
 exports.author_create_get = asyncHandler(async (req, res, next) =>{

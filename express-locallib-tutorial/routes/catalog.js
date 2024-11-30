@@ -28,6 +28,7 @@ router.post('/book/:id/update', book_controller.book_update_post);
 
 router.get('/books/:id', book_controller.book_details);
 
+router.get('/books', book_controller.book_list);
 //author routers
 
 router.get('/author/create', author_controller.author_create_get);
@@ -77,5 +78,7 @@ router.get('/genre/:id/update', genre_controller.genre_update_get);
 router.post('/genre/:id/update', genre_controller.genre_update_post);
 
 router.get('/genres/:id', genre_controller.genre_details);
+
+router.get('/genres', genre_controller.genre_list);
 
 module.exports = router;
