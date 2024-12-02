@@ -1,4 +1,5 @@
 const Book = require("../models/book");
+const BookInstance = require("../models/bookinstance")
 
 const asyncHandler = require("express-async-handler");
 
@@ -13,7 +14,19 @@ exports.book_list = asyncHandler(async (req, res, next) =>{
 });
 
 exports.book_details = asyncHandler(async (req, res, next) =>{
-    res.send(`NOT IMPLEMENTED: BOOK DETAILS: ${req.params.id}`);
+    // res.send(`NOT IMPLEMENTED: BOOK DETAILS: ${req.params.id}`);
+    const[book, bookinstance] = await Promise.all([
+        Book.findById(req.params.id).populate("author").populate('genre').exec(),
+        BookInstance.find({book:req.params.id}).exec(),
+    ]);
+
+    if(book === null){
+        err = new error('Book not found');
+        err.status(400);
+        return next(err);
+    };
+
+    res.status(200).json({book, bookinstance});
 });
 
 exports.book_create_get = asyncHandler(async (req, res, next) => {

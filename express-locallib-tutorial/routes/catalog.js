@@ -61,7 +61,9 @@ router.get('/bookInstance/:id/update', bookInstance_controller.bookinstance_upda
 
 router.post('/bookInstance/:id/update', bookInstance_controller.bookinstance_update_post);
 
-router.get('/bookinstances/:id', bookInstance_controller.bookinstance_detail);
+router.get('/bookInstances/:id', bookInstance_controller.bookinstance_detail);
+
+router.get('/bookInstances', bookInstance_controller.bookinstance_list);
 
 //genre routers
 
