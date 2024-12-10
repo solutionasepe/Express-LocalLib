@@ -59,15 +59,38 @@ exports.book_create_post = asyncHandler(async (req, res, next)=>{
 });
 
 exports.book_update_get = asyncHandler(async (req, res, next) =>{
-    res.send("NOT IMPLEMENTED: Book update GET");
+    // res.send("NOT IMPLEMENTED: Book update GET");
+    const{title, author, summary, isbn, genre} = req.body;
+
+    const book_update = await Book.findByIdAndUpdate(
+        req.params.id,
+        {title, author, summary, isbn, genre},
+        {new:true, runValidators:true}
+    );
+
+    if(!book_update){
+        res.status(401).json({error:"Book not found and can't be updated"});
+    }
+
+    const savedBookUpdate = await book_update.save();
+
+    res.status(201).json({message:"The book is updated already and saved"}, savedBookUpdate)
+
 });
 
-exports.book_update_post = asyncHandler(async (req, res, next) =>{
-    res.send("NOT IMPLEMENTED: Book update POST");
-});
+// exports.book_update_post = asyncHandler(async (req, res, next) =>{
+//     res.send("NOT IMPLEMENTED: Book update POST");
+// });
 
 exports.book_delete_get = asyncHandler(async (req, res, next) =>{
-    res.send("NOT IMPLEMENTED: Book delete GET");
+    // res.send("NOT IMPLEMENTED: Book delete GET");
+    const book_delete = await Book.findByIdAndDelete(req.params.id);
+
+    if (!book_delete){
+        res.status(404).json({error:"book is not available for deletion"});
+    }
+
+    res.status(201).json({message:"This book has been deleted sucessfully"}, book_delete)
 });
 
 exports.book_delete_post = asyncHandler(async (req, res, next) =>{

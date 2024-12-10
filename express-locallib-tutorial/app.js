@@ -7,8 +7,23 @@ const mongoDB = "mongodb+srv://Cluster0:xUnpVwmxQUPvypSE@cluster0.pxl60.mongodb.
 
 main().catch((err) => console.log(err));
 async function main(){
-  await mongoose.connect(mongoDB);
+  const conn = mongoose.connect(mongoDB);
 }
+
+// mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connection.on('connected', async () => {
+//     console.log('Connected to MongoDB');
+
+//     try {
+//         await mongoose.connection.db.dropDatabase();
+//         console.log('Database dropped successfully!');
+//     } catch (error) {
+//         console.error('Error dropping database:', error);
+//     } finally {
+//         mongoose.connection.close(); // Close the connection
+//     }
+// });
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
