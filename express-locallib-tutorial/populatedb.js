@@ -11,11 +11,16 @@ console.log(
   const Author = require("./models/author");
   const Genre = require("./models/genre");
   const BookInstance = require("./models/bookinstance");
+  const User = require('./models/user');
+
+  const bcrypt = require('bcrypt');
   
   const genres = [];
   const authors = [];
   const books = [];
+  const newUsers = [];
   const bookinstances = [];
+  
   
   const mongoose = require("mongoose");
   mongoose.set("strictQuery", false);
@@ -31,6 +36,7 @@ console.log(
     await createGenres();
     await createAuthors();
     await createBooks();
+    await createUser();
     await createBookInstances();
     console.log("Debug: Closing mongoose");
     mongoose.connection.close();
@@ -72,11 +78,28 @@ console.log(
     books[index] = book;
     console.log(`Added book: ${title}`);
   }
+
+  async function userCreate(index, name, email, password, role, createdAt, updatedAt){
+    const hashedpassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name,
+      email,
+      password: hashedpassword,
+      role,
+      createdAt,
+      updatedAt
+    });
+
+    await newUser.save();
+    newUsers[index] = newUser;
+    console.log(`Added user: ${name}`);
+  };
   
-  async function bookInstanceCreate(index, book, imprint, due_back, status) {
+  async function bookInstanceCreate(index, book, imprint, due_back, status, newUser) {
     const bookinstancedetail = {
       book: book,
       imprint: imprint,
+      user: newUser,
     };
     if (due_back != false) bookinstancedetail.due_back = due_back;
     if (status != false) bookinstancedetail.status = status;
@@ -87,6 +110,7 @@ console.log(
     console.log(`Added bookinstance: ${imprint}`);
   }
   
+  
   async function createGenres() {
     console.log("Adding genres");
     await Promise.all([
@@ -96,6 +120,7 @@ console.log(
     ]);
   }
   
+ 
   async function createAuthors() {
     console.log("Adding authors");
     await Promise.all([
@@ -168,6 +193,46 @@ console.log(
       ),
     ]);
   }
+
+  async function createUser(){
+    console.log("Adding User");
+    await Promise.all([
+      userCreate(
+        0,
+        "Asepeoluwa",
+        "solutionasepekosile@gmail.com",
+        "password123DKJ",
+        "admin"
+      ),
+      userCreate(
+        1,
+        "Anuoluwa",
+        "kosileasepekosile@gmail.com",
+        "password",
+        "user",
+        "2024-12-30",
+        "2024-12-30",
+      ),
+      userCreate(
+        2,
+        "Tunde",
+        "easepekosile@gmail.com",
+        "password123",
+        "admin",
+        "2024-12-30",
+        "2024-12-30",
+     ),
+     userCreate(
+      3,
+      "dele",
+      "delekosile@gmail.com",
+      "passworddkj",
+      "admin",
+      "2024-12-30",
+      "2024-12-30",
+   ),
+  ])
+  }
   
   async function createBookInstances() {
     console.log("Adding authors");
@@ -177,53 +242,60 @@ console.log(
         books[0],
         "London Gollancz, 2014.",
         false,
-        "Available"
+        "Available",
+        newUsers[0]
       ),
-      bookInstanceCreate(1, books[1], " Gollancz, 2011.", false, "Loaned"),
-      bookInstanceCreate(2, books[2], " Gollancz, 2015.", false, false),
+      bookInstanceCreate(1, books[1], " Gollancz, 2011.", false, "Loaned", newUsers[0]),
+      bookInstanceCreate(2, books[2], " Gollancz, 2015.", false, false, newUsers[1]),
       bookInstanceCreate(
         3,
         books[3],
         "New York Tom Doherty Associates, 2016.",
         false,
-        "Available"
+        "Available",
+        newUsers[2]
       ),
       bookInstanceCreate(
         4,
         books[3],
         "New York Tom Doherty Associates, 2016.",
         false,
-        "Available"
+        "Available",
+        newUsers[2]
       ),
       bookInstanceCreate(
         5,
         books[3],
         "New York Tom Doherty Associates, 2016.",
         false,
-        "Available"
+        "Available",
+        newUsers[2]
       ),
       bookInstanceCreate(
         6,
         books[4],
         "New York, NY Tom Doherty Associates, LLC, 2015.",
         false,
-        "Available"
+        "Available",
+        newUsers[3]
       ),
       bookInstanceCreate(
         7,
         books[4],
         "New York, NY Tom Doherty Associates, LLC, 2015.",
         false,
-        "Maintenance"
+        "Maintenance",
+        newUsers[0]
       ),
       bookInstanceCreate(
         8,
         books[4],
         "New York, NY Tom Doherty Associates, LLC, 2015.",
         false,
-        "Loaned"
+        "Loaned",
+        newUsers[1]
       ),
-      bookInstanceCreate(9, books[0], "Imprint XXX2", false, false),
-      bookInstanceCreate(10, books[1], "Imprint XXX3", false, false),
+      bookInstanceCreate(9, books[0], "Imprint XXX2", false, false, newUsers[1]),
+      bookInstanceCreate(10, books[1], "Imprint XXX3", false, false, newUsers[0]),
     ]);
   }

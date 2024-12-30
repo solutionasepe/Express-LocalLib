@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const Schema = mongoose.Schema;
 
 bookInstanceSchema = new Schema({
@@ -12,6 +13,7 @@ bookInstanceSchema = new Schema({
         default: "Maintenance",
     },
     due_back : {type: Date, default:Date.now},
+    borrower :{type: Schema.Types.ObjectId, ref:"User"}
 });
 
 bookInstanceSchema.virtual("url").get(function(){

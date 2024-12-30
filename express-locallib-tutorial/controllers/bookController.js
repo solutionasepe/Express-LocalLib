@@ -29,6 +29,24 @@ exports.book_details = asyncHandler(async (req, res, next) =>{
     res.status(200).json({book, bookinstance});
 });
 
+exports.borrowed_books = asyncHandler(async (req, res, next)=>{
+
+    const borrowed_book = await BookInstance.findById(req.params.id);
+    if(!borrowed_book){
+        return res.status(404).json({message: "Not found"})
+    };
+    if(borrowed_book.status == "Available"){
+        borrowed_book.status = "Loaned";
+        savedBorrowed = await borrowed_book.save();
+        return res.status(200).json(savedBorrowed);
+    } else {
+        return res.status(404).json({message:"Books are not availble for borrowing"});
+    };
+
+    
+
+});
+
 exports.book_create_get = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMETED: Book create GET");
 });

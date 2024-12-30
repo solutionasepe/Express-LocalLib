@@ -5,7 +5,7 @@ const book_controller = require("../controllers/bookController");
 const author_controller = require("../controllers/authorController");
 const bookInstance_controller = require("../controllers/bookInstanceController");
 const genre_controller = require("../controllers/genreController");
-
+const user_controller = require("../controllers/userController");
 /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -29,6 +29,7 @@ router.put('/book/:id/update', book_controller.book_update_get);
 router.get('/books/:id', book_controller.book_details);
 
 router.get('/books', book_controller.book_list);
+router.post('/borrowed_books/:id', book_controller.borrowed_books);
 //author routers
 
 router.get('/author/create', author_controller.author_create_get);
@@ -49,7 +50,7 @@ router.get("/authors", author_controller.author_list);
 
 //bookInstance routers
 
-router.get('/bookInstance/create', bookInstance_controller.bookinstance_create_get);
+// router.get('/bookInstance/create', bookInstance_controller.bookinstance_create_get);
 
 router.post('/bookInstance/create', bookInstance_controller.bookinstance_create_post);
 
@@ -84,3 +85,8 @@ router.get('/genres/:id', genre_controller.genre_details);
 router.get('/genres', genre_controller.genre_list);
 
 module.exports = router;
+
+// user router 
+
+router.post('/user/login', user_controller.userLogin);
+router.get('/users', user_controller.userList);

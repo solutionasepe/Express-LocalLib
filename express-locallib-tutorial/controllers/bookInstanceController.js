@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 
 exports.bookinstance_list = asyncHandler(async (req, res, next) =>{
     // res.send("NOT IMPLEMENTED: BookInstance List");
-    const bookInstance = await BookInstance.find().populate(Book).exec();
+    const bookInstance = await BookInstance.find().exec();
     res.status(200).json(bookInstance);
 });
 
@@ -22,9 +22,9 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
     res.status(200).json(bookInstance);
 });
 
-exports.bookinstance_create_get = asyncHandler(async (req, res, next )=> {
-    res.send("NOT IMPLEMENTED: bookInstance create GET");
-});
+// exports.bookinstance_create_get = asyncHandler(async (req, res, next )=> {
+//     res.send("NOT IMPLEMENTED: bookInstance create GET");
+// });
 
 exports.bookinstance_create_post = asyncHandler(async (req, res, next)=> {
     // res.send("NOT IMPLEMENTED: bookInstance create POST");
