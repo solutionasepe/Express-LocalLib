@@ -5,7 +5,7 @@ const book_controller = require("../controllers/bookController");
 const author_controller = require("../controllers/authorController");
 const bookInstance_controller = require("../controllers/bookInstanceController");
 const genre_controller = require("../controllers/genreController");
-const user_controller = require("../controllers/userController");
+
 /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -88,5 +88,3 @@ module.exports = router;
 
 // user router 
 
-router.post('/user/login', user_controller.userLogin);
-router.get('/users', user_controller.userList);
