@@ -61,15 +61,15 @@ exports.userLogin = asyncHandler(async (req, res, next)=>{
             return jwt.sign({userId}, process.env.SECRET_ACCESS_TOKEN, {expiresIn: '20m'});
         };
 
-        let options = {
-            maxAge: 20 * 60 * 1000,
-            httpOnly: true,
-            secure: true,
-            sameSite:"None"
-        }
+        // let options = {
+        //     maxAge: 20 * 60 * 1000,
+        //     httpOnly: true,
+        //     secure: true,
+        //     sameSite:"None"
+        // }
         const accessToken = generateaccessToken(userExist);
         console.log(accessToken);
-        res.cookie("SessionID", accessToken, options);
+        // res.cookie("SessionID", accessToken, options);
         res.status(200).json({message: "You have successfully logged in ", accessToken})
 
     }catch(error){
